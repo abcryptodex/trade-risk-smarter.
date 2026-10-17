@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#14532d">
+<title>TRADE RISK SMATER</title>
+<style>
+:root{--g:#14532d;--g2:#166534;--p:#dcfce7;--bg:#f5f8f5;--line:#e2e9e3;--muted:#68766c;--red:#dc2626}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#17251b;font:14px system-ui,Arial,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.layout{display:flex;min-height:100vh}.sidebar{width:235px;background:white;border-right:1px solid var(--line);padding:22px 14px;flex-shrink:0}
+.brand{font-weight:900;color:var(--g);font-size:16px;padding:8px 10px 24px}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.navlabel{font-size:10px;color:var(--muted);font-weight:800;letter-spacing:1px;padding:12px}
+nav button{display:block;width:100%;text-align:left;border:0;background:transparent;padding:12px;border-radius:9px;margin:3px 0;color:#526056}
+nav button.active,nav button:hover{background:var(--p);color:var(--g);font-weight:800}
+main{flex:1;min-width:0}.top{height:68px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 26px;position:sticky;top:0;z-index:3}
+.content{max-width:1250px;margin:auto;padding:26px}.head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:22px}.head h1{font-size:27px;margin:6px 0}.head p,.muted{color:var(--muted);font-size:12px}.eyebrow{color:var(--g2);font-weight:800;font-size:10px;letter-spacing:1.3px}
+.grid{display:grid;gap:15px}.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:16px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{background:white;border:1px solid var(--line);border-radius:14px;padding:19px;min-width:0;box-shadow:0 5px 20px #14532d08}.card h2{font-size:15px;margin:0 0 6px}.statlabel{color:var(--muted);font-size:12px}.stat{font-size:25px;font-weight:850;margin:10px 0}.btn{border:1px solid var(--line);background:white;padding:10px 13px;border-radius:9px;font-weight:700;font-size:12px}.primary{background:var(--g);border-color:var(--g);color:white}.danger{color:var(--red)}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:18px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field label{font-size:12px;font-weight:700}.field input,.field select,.field textarea{width:100%;padding:11px;border:1px solid #d8e2da;border-radius:9px;background:white;color:#17251b}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.results{background:#f0fdf4;border:1px solid #ccebd3;border-radius:12px;padding:12px;margin-top:16px}.resultgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.result{background:white;border:1px solid #e2f0e5;border-radius:9px;padding:11px;overflow-wrap:anywhere}.result span{display:block;color:var(--muted);font-size:10px;margin-bottom:7px}.result b{font-size:15px}
+.page{display:none}.page.active{display:block}.quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}.quick button{text-align:left;border:1px solid var(--line);background:white;padding:15px;border-radius:10px}.quick b{display:block;margin-bottom:5px}.quick span{color:var(--muted);font-size:11px}
+.tablewrap{overflow:auto;margin-top:14px}table{width:100%;border-collapse:collapse;min-width:650px}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);font-size:12px}th{color:var(--muted);font-size:10px}.empty{text-align:center;color:var(--muted);padding:25px}
+.coin{display:flex;justify-content:space-between;gap:12px;align-items:center}.coin b{display:block}.coin small{color:var(--muted)}.up{color:var(--g2)}.down{color:var(--red)}
+.notice{background:#fffbeb;border:1px solid #f2d8a8;padding:12px;border-radius:9px;color:#854d0e;font-size:11px;line-height:1.6;margin-top:15px}
+.settingsrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 0;border-bottom:1px solid var(--line)}.settingsrow:last-child{border:0}.settingsrow p{font-size:11px;color:var(--muted);margin:5px 0}
+.mobilebar{display:none}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:1fr}.sidebar{width:205px}.content{padding:18px}}
+@media(max-width:650px){.layout{display:block}.sidebar{display:none}.top{height:58px;padding:0 14px}.content{padding:18px 12px 90px}.head h1{font-size:23px}.head .btn{padding:9px}.stats{gap:9px}.card{padding:14px}.stat{font-size:21px}.fields{grid-template-columns:1fr}.mobilebar{display:flex;position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--line);justify-content:space-around;padding:7px 2px calc(7px + env(safe-area-inset-bottom));z-index:5}.mobilebar button{width:auto;text-align:center;font-size:10px;padding:5px 7px;margin:0}.mobilebar button.active{background:var(--p);color:var(--g)}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="brand">🌿 TRADE RISK SMATER<small>Trade with a plan.</small></div>
+<div class="navlabel">WORKSPACE</div>
+<nav id="desktopnav">
+<button class="active" data-page="dashboard">▦ Dashboard</button>
+<button data-page="risk">◈ Risk Calculator</button>
+<button data-page="dex">◇ DEX Calculator</button>
+<button data-page="futures">⇅ Futures Calculator</button>
+<button data-page="journal">✎ Trading Journal</button>
+<button data-page="history">◷ Trade History</button>
+<button data-page="market">⌁ Market Watch</button>
+<div class="navlabel">PREFERENCES</div>
+<button data-page="settings">⚙ Settings</button>
+<button data-page="support">? Support Center</button>
+</nav>
+</aside>
+<main>
+<header class="top"><b id="breadcrumb">Dashboard</b><span style="color:#166534;font-size:11px;font-weight:800">● PLANNING MODE</span></header>
+<div class="content">
+
+<section class="page active" id="dashboard">
+<div class="head"><div><div class="eyebrow">YOUR TRADING OVERVIEW</div><h1>Dashboard</h1><p>Make decisions with a plan, not emotion.</p></div><button class="btn primary" data-goto="journal">＋ Log a trade</button></div>
+<div class="grid stats">
+<div class="card"><div class="statlabel">Total trades</div><div class="stat" id="totalTrades">0</div><div class="muted">Recorded on this device</div></div>
+<div class="card"><div class="statlabel">Win rate</div><div class="stat" id="winRate">—</div><div class="muted">Closed trades only</div></div>
+<div class="card"><div class="statlabel">Net P/L</div><div class="stat" id="netPnl">$0.00</div><div class="muted">Recorded P/L</div></div>
+<div class="card"><div class="statlabel">Default risk</div><div class="stat" id="riskDefault">1%</div><div class="muted">Per trade</div></div>
+</div>
+<div class="grid two">
+<div class="card"><h2>Trading performance</h2><p class="muted">Your saved journal results.</p><div class="results"><b id="snapshot">Your trading journey starts here.</b><p class="muted">Record trades consistently and review your decisions.</p></div><div class="actions"><button class="btn" data-goto="history">View history</button><button class="btn" data-goto="risk">Calculate risk</button></div></div>
+<div class="card"><h2>Quick tools</h2><div class="quick"><button data-goto="dex"><b>◇ DEX Calculator</b><span>Market-cap targets</span></button><button data-goto="futures"><b>⇅ Futures Calculator</b><span>Leverage and stop loss</span></button><button data-goto="risk"><b>◈ Risk Calculator</b><span>Position sizing</span></button><button data-goto="journal"><b>✎ Trading Journal</b><span>Log your execution</span></button></div><div class="notice">This website does not execute trades or connect to exchange accounts.</div></div>
+</div>
+</section>
+
+<section class="page" id="risk">
+<div class="head"><div><div class="eyebrow">CAPITAL PROTECTION</div><h1>Risk Calculator</h1><p>Know your risk before entering a trade.</p></div></div>
+<div class="grid two">
+<div class="card"><h2>Trade parameters</h2><div class="fields">
+<div class="field"><label>Account balance</label><input id="rcap" type="number" value="100" min="0.01"></div>
+<div class="field"><label>Risk (%)</label><input id="rpct" type="number" value="1" min="0.01" max="100" step="any"></div>
+<div class="field"><label>Entry price</label><input id="rentry" type="number" value="100" min="0.00000001" step="any"></div>
+<div class="field"><label>Stop-loss price</label><input id="rstop" type="number" value="95" min="0" step="any"></div>
+<div class="field"><label>Take-profit price</label><input id="rtarget" type="number" value="112.5" min="0" step="any"></div>
+<div class="field"><label>Direction</label><select id="rside"><option value="long">Long / Buy</option><option value="short">Short / Sell</option></select></div>
+</div><div class="actions"><button class="btn primary" id="runRisk">Calculate</button><button class="btn" id="resetRisk">Reset</button></div></div>
+<div class="card"><h2>Risk summary</h2><p class="muted">Excludes fees and slippage.</p><div class="results"><div class="resultgrid">
+<div class="result"><span>Maximum planned loss</span><b id="rloss">—</b></div>
+<div class="result"><span>Position size</span><b id="rposition">—</b></div>
+<div class="result"><span>Potential profit</span><b id="rprofit">—</b></div>
+<div class="result"><span>Risk : Reward</span><b id="rratio">—</b></div>
+<div class="result"><span>Stop distance</span><b id="rdistance">—</b></div>
+<div class="result"><span>Break-even before fees</span><b id="rbe">—</b></div>
+</div></div><p class="muted">Position size is not the same as margin required. Break-even is the entry price before fees.</p></div>
+</div>
+</section>
+
+<section class="page" id="dex">
+<div class="head"><div><div class="eyebrow">DECENTRALIZED EXCHANGES</div><h1>DEX Calculator</h1><p>Plan market-cap targets and potential return.</p></div></div>
+<div class="grid two">
+<div class="card"><h2>DEX trade setup</h2><div class="fields">
+<div class="field"><label>Entry market cap ($)</label><input id="dentry" type="number" value="27000" min="0.01"></div>
+<div class="field"><label>Investment amount</label><input id="dcapital" type="number" value="10" min="0.01"></div>
+<div class="field"><label>Stop loss (%)</label><input id="dsl" type="number" value="25" min="0.1" max="99" step="any"></div>
+<div class="field"><label>Target reward (R)</label><input id="drr" type="number" value="2.5" min="0.1" step="any"></div>
+<div class="field"><label>Estimated total fees (%)</label><input id="dfee" type="number" value="2" min="0" max="99" step="any"></div>
+<div class="field"><label>Direction</label><select id="dside"><option value="long">Long / Buy</option><option value="short">Short / Sell (theoretical)</option></select></div>
+</div><div class="actions"><button class="btn primary" id="runDex">Calculate targets</button><button class="btn" id="resetDex">Reset</button></div></div>
+<div class="card"><h2>Target overview</h2><div class="results"><div class="resultgrid">
+<div class="result"><span>Stop-loss market cap</span><b id="dstop">—</b></div>
+<div class="result"><span>Take-profit market cap</span><b id="dtarget">—</b></div>
+<div class="result"><span>Target multiple</span><b id="dmultiple">—</b></div>
+<div class="result"><span>Price change</span><b id="dchange">—</b></div>
+<div class="result"><span>Gross profit estimate</span><b id="dgross">—</b></div>
+<div class="result"><span>Profit after fee estimate</span><b id="dnet">—</b></div>
+<div class="result"><span>Loss at stop estimate</span><b id="dloss">—</b></div>
+<div class="result"><span>Break-even cap estimate</span><b id="dbe">—</b></div>
+</div></div><p class="muted">Market cap is only a price-movement proxy. Liquidity, slippage, token taxes and contract risks affect execution.</p></div>
+</div>
+</section>
+
+<section class="page" id="futures">
+<div class="head"><div><div class="eyebrow">PERPETUALS & LEVERAGE</div><h1>Futures Calculator</h1><p>Estimate position size and stop-loss risk.</p></div></div>
+<div class="grid two">
+<div class="card"><h2>Position parameters</h2><div class="fields">
+<div class="field"><label>Margin / capital</label><input id="fcapital" type="number" value="100" min="0.01"></div>
+<div class="field"><label>Risk of margin (%)</label><input id="frisk" type="number" value="30" min="0.1" max="100"></div>
+<div class="field"><label>Entry price</label><input id="fentry" type="number" value="100" min="0.00000001" step="any"></div>
+<div class="field"><label>Leverage (x)</label><input id="flev" type="number" value="5" min="1" max="200"></div>
+<div class="field"><label>Direction</label><select id="fside"><option value="long">Long / Buy</option><option value="short">Short / Sell</option></select></div>
+<div class="field"><label>Estimated fees (% notional)</label><input id="ffee" type="number" value="0.1" min="0" max="99" step="any"></div>
+<div class="field" style="grid-column:1/-1"><label>Manual stop-loss price (optional)</label><input id="fmanual" type="number" min="0" step="any" placeholder="Leave blank to auto-calculate"></div>
+</div><div class="actions"><button class="btn primary" id="runFutures">Calculate position</button><button class="btn" id="resetFutures">Reset</button></div></div>
+<div class="card"><h2>Futures risk summary</h2><div class="results"><div class="resultgrid">
+<div class="result"><span>Position notional</span><b id="fnotional">—</b></div>
+<div class="result"><span>Estimated stop</span><b id="fstop">—</b></div>
+<div class="result"><span>Stop distance</span><b id="fdistance">—</b></div>
+<div class="result"><span>Loss at stop</span><b id="floss">—</b></div>
+<div class="result"><span>Approx. quantity</span><b id="fqty">—</b></div>
+<div class="result"><span>Fee estimate</span><b id="ffees">—</b></div>
+<div class="result"><span>Break-even before fees</span><b id="fbe">—</b></div>
+<div class="result"><span>Planned risk amount</span><b id="friskout">—</b></div>
+</div></div><p class="muted">This is not the liquidation price. Actual results depend on maintenance margin, funding, fees and exchange rules.</p></div>
+</div>
+</section>
+
+<section class="page" id="journal">
+<div class="head"><div><div class="eyebrow">DISCIPLINE & CONSISTENCY</div><h1>Trading Journal</h1><p>Record your decisions and lessons.</p></div></div>
+<div class="card"><h2>Log a trade</h2><p class="muted">Entries are saved in this browser only for now.</p>
+<form id="journalForm"><div class="fields">
+<div class="field"><label>Date</label><input id="jdate" type="date" required></div>
+<div class="field"><label>Market / token</label><input id="jmarket" required maxlength="40" placeholder="SOL/USDT or TOKEN"></div>
+<div class="field"><label>Trade type</label><select id="jtype"><option>DEX</option><option>Futures</option><option>Spot</option><option>Other</option></select></div>
+<div class="field"><label>Direction</label><select id="jside"><option>Long</option><option>Short</option><option>Spot Buy</option></select></div>
+<div class="field"><label>Entry price / market cap</label><input id="jentry" type="number" min="0" step="any"></div>
+<div class="field"><label>Exit price / market cap</label><input id="jexit" type="number" min="0" step="any"></div>
+<div class="field"><label>Capital used</label><input id="jcapital" type="number" min="0.01" step="any" required></div>
+<div class="field"><label>Realized P/L</label><input id="jpnl" type="number" step="any" value="0" required></div>
+<div class="field"><label>Status</label><select id="jstatus"><option>Closed</option><option>Open</option></select></div>
+<div class="field"><label>Setup / reason</label><input id="jsetup" maxlength="120" placeholder="Breakout, retest..."></div>
+<div class="field" style="grid-column:1/-1"><label>Notes / lesson learned</label><textarea id="jnotes" rows="2" maxlength="500"></textarea></div>
+</div><div class="actions"><button class="btn primary" type="submit">＋ Save trade</button><button class="btn" type="reset">Clear form</button></div></form></div>
+<div class="card" style="margin-top:16px"><h2>Recent trades</h2><div class="tablewrap"><table><thead><tr><th>Date</th><th>Market</th><th>Type</th><th>Side</th><th>Capital</th><th>P/L</th><th>Status</th><th></th></tr></thead><tbody id="recentRows"></tbody></table></div></div>
+</section>
+
+<section class="page" id="history">
+<div class="head"><div><div class="eyebrow">REVIEW YOUR EXECUTION</div><h1>Trade History</h1><p>Review and export your journal.</p></div><div><button class="btn" id="exportCsv">Export CSV</button></div></div>
+<div class="card"><div class="grid stats"><div><div class="statlabel">Closed trades</div><div class="stat" id="closedCount">0</div></div><div><div class="statlabel">Wins</div><div class="stat up" id="winsCount">0</div></div><div><div class="statlabel">Losses</div><div class="stat down" id="lossesCount">0</div></div><div><div class="statlabel">Average P/L</div><div class="stat" id="averagePnl">$0</div></div></div>
+<div class="tablewrap"><table><thead><tr><th>Date</th><th>Market</th><th>Type</th><th>Side</th><th>Entry</th><th>Exit</th><th>Capital</th><th>P/L</th><th>Status</th><th></th></tr></thead><tbody id="historyRows"></tbody></table></div>
+<div class="actions"><button class="btn danger" id="clearHistory">Clear all local trades</button></div><p class="muted">Export a CSV backup before clearing browser data.</p></div>
+</section>
+
+<section class="page" id="market">
+<div class="head"><div><div class="eyebrow">PUBLIC MARKET DATA</div><h1>Market Watch</h1><p>Indicative public prices, not exchange account data.</p></div><button class="btn" id="refreshMarket">↻ Refresh</button></div>
+<div class="card"><b id="marketStatus">Fetching public prices…</b><p class="muted">Source: Binance public ticker endpoint.</p><div class="grid two" id="coins"></div><div class="notice">Prices may be unavailable because of network, regional access or API limits. Verify prices on your exchange before trading.</div></div>
+</section>
+
+<section class="page" id="settings">
+<div class="head"><div><div class="eyebrow">PERSONAL PREFERENCES</div><h1>Settings</h1><p>Set your default display and risk values.</p></div></div>
+<div class="card"><h2>Trading preferences</h2>
+<div class="settingsrow"><div><b>Display currency</b><p>Changes displayed currency labels only.</p></div><select id="currency"><option value="USD">USD ($)</option><option value="NGN">NGN (₦)</option></select></div>
+<div class="settingsrow"><div><b>Default risk per trade</b><p>Starting value for the risk calculator.</p></div><input id="settingRisk" type="number" min="0.01" max="100" value="1" style="width:90px;padding:9px;border:1px solid #ddd;border-radius:8px"></div>
+<div class="settingsrow"><div><b>Default DEX reward target</b><p>Starting R multiple.</p></div><input id="settingRR" type="number" min="0.1" value="2.5" style="width:90px;padding:9px;border:1px solid #ddd;border-radius:8px"></div>
+<div class="actions"><button class="btn primary" id="saveSettings">Save preferences</button></div></div>
+<div class="card" style="margin-top:16px"><h2>Account and security status</h2>
+<div class="settingsrow"><div><b>Email registration / login</b><p>Supabase authentication is not connected in this file.</p></div><b class="muted">Not connected</b></div>
+<div class="settingsrow"><div><b>Database sync</b><p>Journal is stored locally, not in Supabase.</p></div><b class="muted">Local only</b></div>
+<div class="settingsrow"><div><b>Exchange connections</b><p>No wallet or exchange credentials are requested.</p></div><b class="muted">Not connected</b></div>
+<p class="muted">Never put Supabase secret/service-role keys or exchange private keys in this file.</p></div>
+</section>
+
+<section class="page" id="support">
+<div class="head"><div><div class="eyebrow">HELP & GUIDANCE</div><h1>Support Center</h1><p>Use this dashboard to plan, track and review trades.</p></div></div>
+<div class="grid two"><div class="card"><h2>How to use the tools</h2><p>1. Decide how much capital you can afford to risk.</p><p>2. Set a stop-loss that matches your trade idea.</p><p>3. Check reward relative to risk, including costs.</p><p>4. Record the result and review what you learned.</p></div><div class="card"><h2>Important limitations</h2><p class="muted">Calculations are estimates. Fees, slippage, funding, liquidity, token taxes and exchange rules can change results.</p><p class="muted">The site does not place orders, connect wallets or sync to a database yet. This is an educational planning tool, not financial advice.</p></div></div>
+</section>
+
+</div>
+</main>
+</div>
+<nav class="mobilebar">
+<button class="active" data-page="dashboard">▦<br>Home</button><button data-page="risk">◈<br>Risk</button><button data-page="dex">◇<br>DEX</button><button data-page="journal">✎<br>Journal</button><button data-page="market">⌁<br>Market</button>
+</nav>
+<script>
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+let currency="USD",defaultRisk=1,defaultRR=2.5,trades=[];
+const KEY="tradeRiskSmaterTradesV1",PREF="tradeRiskSmaterPrefsV1";
+const sym=()=>currency==="NGN"?"₦":"$";
+const money=n=>Number.isFinite(Number(n))?sym()+Number(n).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}):"—";
+const fmt=n=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:8}):"—";
+const num=id=>Number($(id).value);
+const good=n=>Number.isFinite(n)&&n>0;
+function msg(s){alert(s)}
+function load(){
+ try{let a=JSON.parse(localStorage.getItem(KEY)||"[]");if(Array.isArray(a))trades=a}catch(e){}
+ try{let p=JSON.parse(localStorage.getItem(PREF)||"{}");currency=p.currency||currency;defaultRisk=Number(p.risk)||defaultRisk;defaultRR=Number(p.rr)||defaultRR}catch(e){}
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(trades));return true}catch(e){msg("Could not save browser data.");return false}}
+function go(id){
+ if(!$ (id))return;
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ $(id).classList.add("active");
+ document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+ $("breadcrumb").textContent=({dashboard:"Dashboard",risk:"Risk Calculator",dex:"DEX Calculator",futures:"Futures Calculator",journal:"Trading Journal",history:"Trade History",market:"Market Watch",settings:"Settings",support:"Support Center"})[id]||id;
+ if(id==="market")fetchCoins();if(["dashboard","history","journal"].includes(id))render();
+ window.scrollTo(0,0);
+}
+document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+document.querySelectorAll("[data-goto]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.goto)));
+function calcRisk(){
+ let cap=num("rcap"),pct=num("rpct"),e=num("rentry"),s=num("rstop"),t=num("rtarget"),side=$("rside").value;
+ if(!good(cap)||!good(pct)||pct>100||!good(e)||!good(s)||!good(t))return msg("Enter valid positive risk values.");
+ let sd=side==="long"?e-s:s-e,rd=side==="long"?t-e:e-t;
+ if(sd<=0||rd<=0)return msg("Check entry, stop and target for the selected direction.");
+ let loss=cap*pct/100,qty=loss/sd,position=qty*e,profit=qty*rd;
+ $("rloss").textContent=money(loss);$("rposition").textContent=money(position);$("rprofit").textContent=money(profit);$("rratio").textContent=(profit/loss).toFixed(2)+"R";$("rdistance").textContent=(sd/e*100).toFixed(2)+"%";$("rbe").textContent=fmt(e);
+}
+$("runRisk").onclick=calcRisk;
+$("resetRisk").onclick=()=>{$("rcap").value=100;$("rpct").value=defaultRisk;$("rentry").value=100;$("rstop").value=95;$("rtarget").value=112.5;$("rside").value="long";calcRisk()};
+function calcDex(){
+ let e=num("dentry"),cap=num("dcapital"),sl=num("dsl"),rr=num("drr"),fee=num("dfee"),side=$("dside").value;
+ if(!good(e)||!good(cap)||!good(sl)||sl>=100||!good(rr)||!Number.isFinite(fee)||fee<0||fee>=100)return msg("Check DEX values; stop loss must be below 100%.");
+ let stop=side==="long"?e*(1-sl/100):e*(1+sl/100),target=side==="long"?e*(1+sl/100*rr):e*(1-sl/100*rr);
+ if(target<=0)return msg("Target is below zero. Reduce stop-loss percentage or reward target.");
+ let multiple=target/e,change=(multiple-1)*100,gross=cap*change/100,fees=cap*fee/100*(1+Math.max(change,0)/100),net=gross-fees,loss=cap*sl/100,be=e/(1-fee/100);
+ $("dstop").textContent=money(stop);$("dtarget").textContent=money(target);$("dmultiple").textContent=multiple.toFixed(3)+"×";$("dchange").textContent=(change>=0?"+":"")+change.toFixed(2)+"%";$("dgross").textContent=money(gross);$("dnet").textContent=money(net);$("dloss").textContent=money(loss);$("dbe").textContent=money(be);
+}
+$("runDex").onclick=calcDex;
+$("resetDex").onclick=()=>{$("dentry").value=27000;$("dcapital").value=10;$("dsl").value=25;$("drr").value=defaultRR;$("dfee").value=2;$("dside").value="long";calcDex()};
+function calcFutures(){
+ let cap=num("fcapital"),risk=num("frisk"),e=num("fentry"),lev=num("flev"),fee=num("ffee"),side=$("fside").value,manual=$("fmanual").value.trim();
+ if(!good(cap)||!good(risk)||risk>100||!good(e)||!good(lev)||lev>200||!Number.isFinite(fee)||fee<0||fee>=100)return msg("Check futures values and leverage.");
+ let notional=cap*lev,qty=notional/e,stop=manual!==""?Number(manual):(side==="long"?e*(1-risk/100/lev):e*(1+risk/100/lev));
+ if(!good(stop)||(side==="long"&&stop>=e)||(side==="short"&&stop<=e))return msg("Long stop must be below entry; Short stop must be above entry.");
+ let dist=Math.abs(e-stop)/e,loss=qty*Math.abs(e-stop),fees=notional*fee/100;
+ $("fnotional").textContent=money(notional);$("fstop").textContent=fmt(stop);$("fdistance").textContent=(dist*100).toFixed(3)+"%";$("floss").textContent=money(loss);$("fqty").textContent=fmt(qty);$("ffees").textContent=money(fees);$("fbe").textContent=fmt(e);$("friskout").textContent=money(cap*risk/100);
+}
+$("runFutures").onclick=calcFutures;
+$("resetFutures").onclick=()=>{$("fcapital").value=100;$("frisk").value=30;$("fentry").value=100;$("flev").value=5;$("fside").value="long";$("ffee").value=.1;$("fmanual").value="";calcFutures()};
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function render(){
+ const closed=trades.filter(t=>t.status==="Closed"),wins=closed.filter(t=>t.pnl>0),losses=closed.filter(t=>t.pnl<0),net=closed.reduce((a,t)=>a+t.pnl,0);
+ $("totalTrades").textContent=trades.length;$("winRate").textContent=closed.length?(wins.length/closed.length*100).toFixed(1)+"%":"—";$("netPnl").textContent=money(net);$("riskDefault").textContent=defaultRisk+"%";$("snapshot").textContent=closed.length+" closed trades · Net P/L "+money(net);
+ $("closedCount").textContent=closed.length;$("winsCount").textContent=wins.length;$("lossesCount").textContent=losses.length;$("averagePnl").textContent=money(closed.length?net/closed.length:0);
+ let ordered=[...trades].sort((a,b)=>b.created-a.created);
+ const recent=ordered.slice(0,8).map(t=>`<tr><td>${esc(t.date)}</td><td>${esc(t.market)}</td><td>${esc(t.type)}</td><td>${esc(t.side)}</td><td>${money(t.capital)}</td><td>${money(t.pnl)}</td><td>${esc(t.status)}</td><td><button class="btn danger" data-del="${esc(t.id)}">Delete</button></td></tr>`).join("");
+ const history=ordered.map(t=>`<tr><td>${esc(t.date)}</td><td>${esc(t.market)}</td><td>${esc(t.type)}</td><td>${esc(t.side)}</td><td>${t.entry?fmt(t.entry):"—"}</td><td>${t.exit?fmt(t.exit):"—"}</td><td>${money(t.capital)}</td><td>${money(t.pnl)}</td><td>${esc(t.status)}</td><td><button class="btn danger" data-del="${esc(t.id)}">Delete</button></td></tr>`).join("");
+ $("recentRows").innerHTML=recent||'<tr><td colspan="8" class="empty">No trades recorded yet.</td></tr>';
+ $("historyRows").innerHTML=history||'<tr><td colspan="10" class="empty">No trades recorded yet.</td></tr>';
+ document.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{if(confirm("Delete this trade?")){trades=trades.filter(t=>t.id!==b.dataset.del);save();render()}});
+}
+$("journalForm").onsubmit=e=>{
+ e.preventDefault();let capital=num("jcapital"),pnl=num("jpnl"),market=$("jmarket").value.trim();
+ if(!market||!good(capital)||!Number.isFinite(pnl))return msg("Enter a market, positive capital and valid P/L.");
+ trades.push({id:Date.now().toString(36),created:Date.now(),date:$("jdate").value||new Date().toISOString().slice(0,10),market,type:$("jtype").value,side:$("jside").value,entry:$("jentry").value,exit:$("jexit").value,capital,pnl,status:$("jstatus").value,setup:$("jsetup").value,notes:$("jnotes").value});
+ if(save()){e.target.reset();$("jdate").value=new Date().toISOString().slice(0,10);render();msg("Trade saved in this browser.")};
+};
+$("exportCsv").onclick=()=>{
+ if(!trades.length)return msg("No trades to export.");
+ const cols=["date","market","type","side","entry","exit","capital","pnl","status","setup","notes"],q=x=>'"'+String(x??"").replace(/"/g,'""')+'"';
+ const csv=[cols.join(","),...trades.map(t=>cols.map(c=>q(t[c])).join(","))].join("\r\n"),blob=new Blob([csv],{type:"text/csv"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="trade-risk-smater-history.csv";a.click();URL.revokeObjectURL(url);
+};
+$("clearHistory").onclick=()=>{if(trades.length&&confirm("Clear all locally saved trades? Export a backup first if needed.")){trades=[];save();render()}};
+$("saveSettings").onclick=()=>{
+ let r=Number($("settingRisk").value),rr=Number($("settingRR").value);
+ if(!good(r)||r>100||!good(rr))return msg("Enter valid defaults.");
+ currency=$("currency").value;defaultRisk=r;defaultRR=rr;
+ try{localStorage.setItem(PREF,JSON.stringify({currency,risk:defaultRisk,rr:defaultRR}))}catch(e){}
+ $("rpct").value=defaultRisk;$("drr").value=defaultRR;render();calcRisk();calcDex();calcFutures();msg("Preferences saved.");
+};
+const assets=[["BTCUSDT","Bitcoin","BTC"],["ETHUSDT","Ethereum","ETH"],["SOLUSDT","Solana","SOL"],["BNBUSDT","BNB","BNB"],["XRPUSDT","XRP","XRP"],["DOGEUSDT","Dogecoin","DOGE"],["TONUSDT","Toncoin","TON"],["ADAUSDT","Cardano","ADA"]];
+async function fetchCoins(){
+ $("marketStatus").textContent="Fetching public prices…";
+ $("coins").innerHTML=assets.map(a=>`<div class="card coin"><div><b>${a[1]}</b><small>${a[2]}/USDT</small></div><div><b>Loading…</b><small>Public data</small></div></div>`).join("");
+ try{
+ const response=await fetch("https://api.binance.com/api/v3/ticker/24hr",{cache:"no-store"});if(!response.ok)throw Error("Unavailable");const data=await response.json(),map=new Map(data.map(x=>[x.symbol,x]));
+ $("coins").innerHTML=assets.map(a=>{let d=map.get(a[0]);if(!d)return `<div class="card coin"><div><b>${a[1]}</b><small>${a[2]}</small></div><div>Unavailable</div></div>`;let ch=Number(d.priceChangePercent),p=Number(d.lastPrice);return `<div class="card coin"><div><b>${a[1]}</b><small>${a[2]}/USDT</small></div><div style="text-align:right"><b>${sym()}${p.toLocaleString(undefined,{maximumFractionDigits:p<1?6:2})}</b><small class="${ch>=0?"up":"down"}">${ch>=0?"+":""}${ch.toFixed(2)}% · 24h</small></div></div>`}).join("");
+ $("marketStatus").textContent="Last updated "+new Date().toLocaleTimeString()+" · Public API";
+ }catch(e){$("marketStatus").textContent="Price feed unavailable. Tap Refresh to retry.";$("coins").innerHTML=assets.map(a=>`<div class="card coin"><div><b>${a[1]}</b><small>${a[2]}</small></div><b>Unavailable</b></div>`).join("")}
+}
+$("refreshMarket").onclick=fetchCoins;
+$("currency").onchange=()=>{currency=$("currency").value;render()};
+load();$("currency").value=currency;$("settingRisk").value=defaultRisk;$("settingRR").value=defaultRR;$("rpct").value=defaultRisk;$("drr").value=defaultRR;$("jdate").value=new Date().toISOString().slice(0,10);
+render();calcRisk();calcDex();calcFutures();fetchCoins();
+})();
+</script>
+</body>
+</html>
